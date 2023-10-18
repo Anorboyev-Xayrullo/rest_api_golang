@@ -1,0 +1,9 @@
+port: "8000"
+
+db:
+  username: "wwickcjt"
+  host: "flora.db.elephantsql.com"
+  port: "5432"
+  dbname: "wwickcjt"
+  sslmode: "disable"
+  password: "qMCJdwghKolfEebmHS9emkL4toIoVRag"

@@ -1,0 +1,788 @@
+basePath: /
+definitions:
+  handler.GetBookListResponse:
+    properties:
+      book:
+        items:
+          $ref: '#/definitions/todo.GetBookList'
+        type: array
+    type: object
+  handler.GetGenerResponse:
+    properties:
+      generall:
+        items:
+          $ref: '#/definitions/todo.GetGenerBook'
+        type: array
+    type: object
+  handler.GetLibraryResponse:
+    properties:
+      library:
+        items:
+          $ref: '#/definitions/todo.Library'
+        type: array
+    type: object
+  handler.GetRatingResponse:
+    properties:
+      rating:
+        items:
+          $ref: '#/definitions/todo.GetRatingBook'
+        type: array
+    type: object
+  handler.errorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  handler.signInInput:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  handler.statusResponse:
+    properties:
+      status:
+        type: string
+    type: object
+  todo.CreateBook:
+    properties:
+      author:
+        type: string
+      description:
+        type: string
+      language:
+        type: string
+      name:
+        type: string
+      numberOfSheets:
+        type: integer
+      typeOfCover:
+        type: boolean
+      yearOfBook:
+        type: integer
+    type: object
+  todo.Gener:
+    properties:
+      book_id:
+        type: integer
+      gener:
+        type: string
+    type: object
+  todo.GetBookList:
+    properties:
+      author:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      language:
+        type: string
+      name:
+        type: string
+      numberOfSheets:
+        type: integer
+      typeOfCover:
+        type: boolean
+      yearOfBook:
+        type: integer
+    type: object
+  todo.GetGenerBook:
+    properties:
+      author:
+        type: string
+      description:
+        type: string
+      gener:
+        type: string
+      id:
+        type: integer
+      language:
+        type: string
+      name:
+        type: string
+      number_of_views:
+        type: integer
+      numberOfSheets:
+        type: integer
+      typeOfCover:
+        type: boolean
+      yearOfBook:
+        type: integer
+    type: object
+  todo.GetRatingBook:
+    properties:
+      author:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      language:
+        type: string
+      name:
+        type: string
+      number_of_views:
+        type: integer
+      numberOfSheets:
+        type: integer
+      rating:
+        type: integer
+      typeOfCover:
+        type: boolean
+      yearOfBook:
+        type: integer
+    type: object
+  todo.Library:
+    properties:
+      author:
+        type: string
+      description:
+        type: string
+      gener:
+        type: string
+      id:
+        type: integer
+      language:
+        type: string
+      name:
+        type: string
+      numberOfSheets:
+        type: integer
+      rating:
+        type: integer
+      typeOfCover:
+        type: boolean
+      yearOfBook:
+        type: integer
+    type: object
+  todo.RatingInput:
+    properties:
+      book_id:
+        type: integer
+      rating:
+        type: integer
+    type: object
+  todo.SuccessData:
+    properties:
+      data: {}
+    type: object
+  todo.UpdateGenerInput:
+    properties:
+      gener:
+        type: string
+    type: object
+  todo.User:
+    properties:
+      name:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - name
+    - password
+    - username
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: API Server for Library books
+  title: Library
+  version: "1.0"
+paths:
+  /api/v1/book:
+    delete:
+      consumes:
+      - application/json
+      description: delete book
+      operationId: delete book
+      parameters:
+      - description: id
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.statusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete Book
+      tags:
+      - book
+    post:
+      consumes:
+      - application/json
+      description: create book
+      operationId: create-book
+      parameters:
+      - description: book info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/todo.CreateBook'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create Book
+      tags:
+      - book
+    put:
+      consumes:
+      - application/json
+      description: Update Book
+      operationId: update book
+      parameters:
+      - description: id
+        in: query
+        name: id
+        required: true
+        type: integer
+      - description: book info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/todo.CreateBook'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.statusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: update Book
+      tags:
+      - book
+  /api/v1/book/id:
+    get:
+      consumes:
+      - application/json
+      description: get book by id
+      operationId: get-book-by-id
+      parameters:
+      - description: id
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/todo.SuccessData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Book By Id
+      tags:
+      - book
+  /api/v1/book/list:
+    get:
+      consumes:
+      - application/json
+      description: get book list
+      operationId: get-book-lists
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.GetBookListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Book list
+      tags:
+      - book
+  /api/v1/book/rating/:
+    post:
+      consumes:
+      - application/json
+      description: create rating
+      operationId: create-rating
+      parameters:
+      - description: rating info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/todo.RatingInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create rating
+      tags:
+      - rating
+  /api/v1/book/rating/all:
+    get:
+      consumes:
+      - application/json
+      description: get rating list
+      operationId: get-rating-lists
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.GetRatingResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get rating list
+      tags:
+      - rating
+  /api/v1/gener/:
+    delete:
+      consumes:
+      - application/json
+      description: delete gener
+      operationId: delete gener
+      parameters:
+      - description: ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/todo.SuccessData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: delete gener
+      tags:
+      - gener
+    get:
+      consumes:
+      - application/json
+      description: get gener
+      operationId: get-gener
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.GetGenerResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Gener
+      tags:
+      - gener
+    post:
+      consumes:
+      - application/json
+      description: create gener
+      operationId: create-gener
+      parameters:
+      - description: genre info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/todo.Gener'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create gener
+      tags:
+      - gener
+    put:
+      consumes:
+      - application/json
+      description: update gener
+      operationId: update gener
+      parameters:
+      - description: ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      - description: book info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/todo.UpdateGenerInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/todo.SuccessData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: update gener
+      tags:
+      - gener
+  /api/v1/gener/id:
+    get:
+      consumes:
+      - application/json
+      description: get gener by id
+      operationId: get-gener-by-id
+      parameters:
+      - description: id
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/todo.SuccessData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Gener By id
+      tags:
+      - gener
+  /api/v1/library/:
+    get:
+      consumes:
+      - application/json
+      description: get library
+      operationId: get-library
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.GetLibraryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Library
+      tags:
+      - library
+  /auth/sign-in:
+    post:
+      consumes:
+      - application/json
+      description: login
+      operationId: login
+      parameters:
+      - description: credentials
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.signInInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: token
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: SignIn
+      tags:
+      - auth
+  /auth/sign-up:
+    post:
+      consumes:
+      - application/json
+      description: create account
+      operationId: create-account
+      parameters:
+      - description: account info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/todo.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: SignUp
+      tags:
+      - auth
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
